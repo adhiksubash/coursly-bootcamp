@@ -1,12 +1,18 @@
 //create express server
-const express = require('express');
+import express from 'express';
 const app = express();
-const bodyParser = require('body-parser');
-const cookieParser = require('cookie-parser');
-const path = require('path');
-const jwtVerify = require('./middlewares/jwtVerification.js');
+import bodyParser from 'body-parser';
+import cookieParser from 'cookie-parser';
+import path from 'path';
 
-require('dotenv').config();
+
+import jwtVerify from './middlewares/jwtVerification.js';
+import student from './routes/student.js'
+import login from './routes/login.js'
+import signup from './routes/signup.js'
+
+
+import 'dotenv/config';
 
 // middlewares
 app.use(bodyParser.json());
@@ -15,9 +21,9 @@ app.use(bodyParser.urlencoded({extended:true}));
 app.set('view engine','ejs');
 
 // api routes
-app.use('/student',jwtVerify, require('./routes/student'));
-app.use('/api/login', require('./routes/login'));
-app.use('/api/signup', require('./routes/signup'));
+app.use('/student',jwtVerify, student);
+app.use('/api/login', login);
+app.use('/api/signup', signup);
 
 // UI routes
 app.get('/',(req,res)=>{

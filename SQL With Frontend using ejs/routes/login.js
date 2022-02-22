@@ -1,16 +1,16 @@
-const express = require('express');
-const bcrypt = require('bcrypt');
-const jwt = require('jsonwebtoken');
-require('dotenv').config();
+import { Router } from 'express';
+import bcrypt from 'bcrypt';
+import jwt from 'jsonwebtoken';
+import 'dotenv/config';
+import databaseService from '../service/databaseService.js';
 
-const router = express.Router();
-const connection = require('../service/databaseService');
+const router = Router();
 
 router.post('/',(req,res)=>{
     let username = req.body.txtUsername;
     let password = req.body.txtPassword;
 
-    connection.query('select * from login where username=?',
+    databaseService.query('select * from login where username=?',
     [username],(err,userData,fields)=>{
         if(err)
         {
@@ -49,4 +49,4 @@ router.post('/',(req,res)=>{
     });
 });
 
-module.exports = router;
+export default router;

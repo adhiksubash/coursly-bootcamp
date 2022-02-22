@@ -1,19 +1,19 @@
-const express = require('express');
-const bcrypt = require('bcrypt');
+import { Router } from 'express';
+import { hash as _hash } from 'bcrypt';
 
-const router = express.Router();
-const connection = require('../service/databaseService');
+const router = Router();
+import databaseService from '../service/databaseService.js';
 const saltRounds = 10;
 
 router.post('/',(req,res)=>{
     let username = req.body.txtUsername;
     let password = req.body.txtPassword;
-    bcrypt.hash(password, saltRounds, function(err, hash) {
+    _hash(password, saltRounds, function(err, hash) {
         if (err) {
             res.status(500).send(err);
             return;
         }
-        connection.query('insert into login (username,password) values (?,?)',
+        databaseService.query('insert into login (username,password) values (?,?)',
         [username,hash],(err,results,fields)=>{
             if(err)
             {
@@ -26,4 +26,4 @@ router.post('/',(req,res)=>{
     });
 });
 
-module.exports = router;
+export default router;
