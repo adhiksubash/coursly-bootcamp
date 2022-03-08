@@ -1,7 +1,10 @@
 import mongoose from "mongoose";
+import jwt from "jsonwebtoken";
+import "dotenv/config";
 
 const SCHEMA = mongoose.Schema;
-const userSchema = new SCHEMA({
+
+const USERSCHEMA = new SCHEMA({
   username: {
     type: String,
     required: true
@@ -33,7 +36,24 @@ const userSchema = new SCHEMA({
   gender: {
     type: Number,
     required: true
-  }
+  },
+  authTokens: [
+    {
+      token: {
+        type: String,
+        required: true
+      }
+    }
+  ]
 });
 
-export default userSchema;
+USERSCHEMA.methods.generateAuthToken = async function () {
+  const token = jwt.sign({ id: this._id }, process.env.SECRET_KEY);
+  this.authToken = await this.authTokens.contact({ token });
+  await this.save();
+  return token;
+};
+
+const user = mongoose.model("user", USERSCHEMA);
+
+export default user;
