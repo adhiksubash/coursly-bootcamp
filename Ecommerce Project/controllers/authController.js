@@ -56,6 +56,7 @@ class AuthController {
             (err, token) => {
               if (err) console.log(err);
               data.authTokens.push({ token: token });
+              res.cookie("token", token);
               res.status(200).redirect("/index");
             }
           );
