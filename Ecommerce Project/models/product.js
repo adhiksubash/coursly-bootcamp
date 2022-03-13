@@ -1,6 +1,7 @@
 import mongoose from "mongoose";
 import jwt from "jsonwebtoken";
 import "dotenv/config";
+import Category from "./category.js";
 
 const SCHEMA = mongoose.Schema;
 
@@ -10,6 +11,10 @@ const PRODUCTSCHEMA = new SCHEMA({
     required: true
   },
   stock: {
+    type: Number,
+    required: true
+  },
+  price: {
     type: Number,
     required: true
   },
@@ -43,6 +48,11 @@ const PRODUCTSCHEMA = new SCHEMA({
   },
   slug: {
     type: String,
+    required: true
+  },
+  category: {
+    type: SCHEMA.Types.ObjectId,
+    ref: Category,
     required: true
   }
 });

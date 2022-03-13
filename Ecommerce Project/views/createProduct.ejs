@@ -7,6 +7,7 @@
     <form action="/product/save" method="post">
       <input type="text" name="name" placeholder="Product Name" />
       <input type="number" name="stock" placeholder="Stock" />
+      <input type="text" name="price" placeholder="Price" />
       <input type="text" name="brand" placeholder="Brand" />
       <input type="text" name="supplier" placeholder="supplier" />
       <input type="text" name="description" placeholder="description" />
@@ -18,6 +19,11 @@
         name="shortDescription"
         placeholder="shortDescription"
       />
+      <select name="categorySelect">
+        <% categories.map(category => { %>
+        <option value="<%= category.id %>"><%= category.name %></option>
+        <% }) %>
+      </select>
       <input type="text" name="slug" placeholder="slug" />
       <input type="submit" value="submit" />
     </form>
